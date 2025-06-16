@@ -18,9 +18,9 @@ public class TestLog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Log normale");
-        Debug.LogWarning("Log warning");
-        Debug.LogError("Log error");
+        //Debug.Log("Log normale");
+        //Debug.LogWarning("Log warning");
+        //Debug.LogError("Log error");
         bc = GetComponent<BoxCollider2D>();
     }
 
