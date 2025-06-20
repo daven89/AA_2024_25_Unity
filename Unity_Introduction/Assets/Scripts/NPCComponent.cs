@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class NPCComponent : MonoBehaviour
 {
+
+
     [SerializeField]
     private bool canInteract;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField]
+    private GameObject prompt;
+    [SerializeField]
+    private DetectPlayerTrigger detectPlayerTrigger;
+
+    private void Reset() {
+        detectPlayerTrigger = GetComponentInChildren<DetectPlayerTrigger>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnEnable() {
+        detectPlayerTrigger.playerTriggerEnter += OnPlayerEnter;
+        detectPlayerTrigger.playerTriggerExit += OnPlayerExit;
     }
+
+    private void OnDisable() {
+        detectPlayerTrigger.playerTriggerEnter -= OnPlayerEnter;
+        detectPlayerTrigger.playerTriggerExit -= OnPlayerExit;
+    }
+
+    public virtual void OnPlayerEnter () {
+        if (!canInteract) return;
+        prompt.SetActive(true);
+    }
+
+    public virtual void OnPlayerExit () {
+        prompt.SetActive(false);
+    }
+
 }
