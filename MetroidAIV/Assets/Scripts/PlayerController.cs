@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
     private LayerMask groundMask;
 
 
+    static int HORIZONTAL_VELOCITY_HASH = Animator.StringToHash("HorizontalVelocity");
+    static int VERTICAL_VELOCITY_HASH = Animator.StringToHash("VerticalVelocity");
+    static int JUMP_HASH = Animator.StringToHash("Jump");
+    static int ISGROUND_HASH = Animator.StringToHash("IsGround");
+
+
     public bool IsGround {
         get { return groundDetector.IsTouchingLayers(groundMask); }
     }
@@ -42,16 +48,26 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() {
         Move();
+        UpdateVisual();
+        if (Mathf.Approximately(rb.velocity.x, 0)) return;
     }
 
 
     private void Move() {
         float xDirection = InputManager.Player_Horizontal;
         rb.velocity = new Vector2(xDirection * speed, rb.velocity.y);
+        visual.UpdatePlayerOrientation(rb.velocity.x < 0);
     }
 
     private void OnPlayerJump (InputAction.CallbackContext context) {
         if (!IsGround) return;
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        visual.SetParameter(JUMP_HASH);
+    }
+
+    private void UpdateVisual () {
+        visual.SetParameter(HORIZONTAL_VELOCITY_HASH, Mathf.Abs(rb.velocity.x));
+        visual.SetParameter(VERTICAL_VELOCITY_HASH, rb.velocity.y);
+        visual.SetParameter(ISGROUND_HASH, IsGround);
     }
 }
