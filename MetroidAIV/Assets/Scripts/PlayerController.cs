@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,10 +20,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable() {
         InputManager.PlayerMap.Enable();
+        InputManager.PlayerJumpAction.performed += OnPlayerJump;
     }
 
     private void OnDisable() {
         InputManager.PlayerMap.Disable();
+        InputManager.PlayerJumpAction.performed -= OnPlayerJump;
     }
 
     private void FixedUpdate() {
@@ -35,4 +38,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(xDirection * speed, rb.velocity.y);
     }
 
+    private void OnPlayerJump (InputAction.CallbackContext context) {
+
+    }
 }
