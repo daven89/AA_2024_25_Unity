@@ -50,13 +50,13 @@ public class PlayerController : MonoBehaviour
         Move();
         UpdateVisual();
         if (Mathf.Approximately(rb.velocity.x, 0)) return;
+        visual.UpdatePlayerOrientation(rb.velocity.x < 0);
     }
 
 
     private void Move() {
         float xDirection = InputManager.Player_Horizontal;
         rb.velocity = new Vector2(xDirection * speed, rb.velocity.y);
-        visual.UpdatePlayerOrientation(rb.velocity.x < 0);
     }
 
     private void OnPlayerJump (InputAction.CallbackContext context) {
