@@ -18,15 +18,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask groundMask;
 
-
+    #region NonDiscutereConIlProf
     static int HORIZONTAL_VELOCITY_HASH = Animator.StringToHash("HorizontalVelocity");
     static int VERTICAL_VELOCITY_HASH = Animator.StringToHash("VerticalVelocity");
     static int JUMP_HASH = Animator.StringToHash("Jump");
     static int ISGROUND_HASH = Animator.StringToHash("IsGround");
+    #endregion
 
-
+    private bool isGround;
+    private float lastUpdateFrame;
     public bool IsGround {
-        get { return groundDetector.IsTouchingLayers(groundMask); }
+        get {
+            if (lastUpdateFrame != Time.time) {
+                isGround = groundDetector.IsTouchingLayers(groundMask);
+                lastUpdateFrame = Time.time;
+            }
+            return isGround;
+        }
     }
 
     private void Reset() {
