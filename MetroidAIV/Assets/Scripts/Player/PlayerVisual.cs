@@ -29,4 +29,8 @@ public class PlayerVisual : MonoBehaviour
         animator.SetTrigger(parameterID);
     }
 
+    public bool FlipX () {
+        return sr.flipX;
+    }
+
 }

@@ -28,4 +28,10 @@ public static class InputManager
             return input.Player.Jump;
         }
     }
+
+    public static InputAction PlayerDashAction {
+        get {
+            return input.Player.Dash;
+        }
+    }
 }
